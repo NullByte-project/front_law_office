@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+body {
+    @apply bg-[#e4e3f0]; /* Puedes usar cualquier color de Tailwind o código HEX */
+}
