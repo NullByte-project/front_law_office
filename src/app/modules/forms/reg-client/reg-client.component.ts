@@ -7,6 +7,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ClientService } from '../../../services/client.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reg-client',
@@ -36,6 +38,8 @@ export class RegClientComponent {
     }
   };
 
+  constructor(private clientService: ClientService, private router: Router) {}
+
   docTypes = ['CC', 'CE', 'Pasaporte'];
   sexes = ['Masculino', 'Femenino', 'Otro'];
   genderIdentities = ['Cisgénero', 'Transgénero', 'No binario', 'Otro'];
@@ -43,9 +47,18 @@ export class RegClientComponent {
   disabilities = ['Ninguna', 'Visual', 'Auditiva', 'Cognitiva', 'Motriz', 'Otra'];
   cities = ['Manizales', 'Villamaría']
 
-  onSubmit() {
-    const clienteStr = JSON.stringify(this.client);
-    localStorage.setItem('cliente', clienteStr);
-    console.log('Cliente guardado en localStorage:', clienteStr);
+  submitForm() {
+    this.clientService.createClient(this.client).subscribe({
+      next: (response) => {
+        console.log('Cliente creado:', response);
+        // Guardar el ID del cliente en localStorage
+        //localStorage.setItem('clientId', response.id);
+        // Redirigir al formulario del estudio socioeconómico
+        //this.router.navigate(['/estudio-socioeconomico']);
+      },
+      error: (err) => {
+        console.error('Error al crear cliente:', err);
+      }
+    });
   }
 }
