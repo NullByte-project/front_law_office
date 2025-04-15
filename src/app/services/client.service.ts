@@ -7,12 +7,17 @@ import { ConfigRoutesBackend } from '../config/config.ruotes.backend';
   providedIn: 'root'
 })
 export class ClientService {
-  apiUrl:string = ConfigRoutesBackend.clients
+  urlClients:string = ConfigRoutesBackend.clients
 
 
   constructor(private http: HttpClient) {}
 
-  createClient(clienData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}create`, clienData);
+  createClient(clientData: any): Observable<any> {
+    return this.http.post<any>(`${this.urlClients}create`, clientData);
+  }
+
+
+  updateSocioeconomicStudy(socioData: any, idclient: String) {
+    return this.http.put(`${this.urlClients}socioeconomicStudy/${idclient}`, socioData);
   }
 }

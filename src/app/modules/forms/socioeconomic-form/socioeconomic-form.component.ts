@@ -7,6 +7,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TextareaModule } from 'primeng/textarea';
+import { ClientService } from '../../../services/client.service';
+import { AlertService } from '../../../services/alerts.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-socioeconomic-form',
@@ -18,7 +21,7 @@ import { TextareaModule } from 'primeng/textarea';
 export class SocioeconomicFormComponent {
   socioForm = {
     householdType: '',
-    description: '',
+    description: 'Descripcion',
     result: '',
     personalIncome: null,
     profession: '',
@@ -32,12 +35,31 @@ export class SocioeconomicFormComponent {
     comments: ''
   };
 
+  constructor(private alertService: AlertService, private clientService: ClientService, private router: Router) {}
+
   householdTypes = ['Propia', 'Arrendada', 'Familiar'];
   results = ['Favorable', 'Desfavorable', 'Pendiente'];
   socioeconomicLevels = ['Bajo', 'Medio', 'Alto'];
 
-  OnSubmit() {
-    console.log(this.socioForm);
-    // Aquí puedes agregar la lógica para enviar el formulario o realizar otras acciones necesarias.
+  submitForm() {
+    const clientId = localStorage.getItem('clientId');
+    if (!clientId) {
+      this.alertService.error('Cliente no encontrado', 'No se encontró el ID del cliente en localStorage.');
+      return;
+    }
+
+    this.alertService.loading('Enviando estudio socioeconómico...');
+
+    this.clientService.updateSocioeconomicStudy(this.socioForm, clientId).subscribe({
+      next: (response) => {
+        this.alertService.success('Estudio registrado', 'El estudio socioeconómico fue enviado correctamente.')
+          .then(() => this.router.navigate(['/'])); // Aca deberia seguir al formulario para registrar la entrevista
+        console.log(response)
+      },
+      error: (err) => {
+        console.error(err);
+        this.alertService.error('Error', 'No se pudo enviar el estudio socioeconómico.');
+      }
+    });
   }
 }

@@ -3,5 +3,6 @@ import { RegClientComponent } from './modules/forms/reg-client/reg-client.compon
 import { SocioeconomicFormComponent } from './modules/forms/socioeconomic-form/socioeconomic-form.component';
 
 export const routes: Routes = [
-    { path: 'entrevista', component: RegClientComponent }
+    { path: '', component: RegClientComponent },
+    { path: 'socioeconomico', component: SocioeconomicFormComponent },
 ];
