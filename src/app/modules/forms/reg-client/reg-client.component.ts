@@ -21,9 +21,9 @@ export class RegClientComponent {
     lastName: '',
     secondLastName: '',
     typeDoc: 'CC',
-    identification: null,
+    identification: '',
     birthDate: null,
-    phone: null,
+    phone: '',
     email: '',
     address: '',
     city: 'Manizales',
@@ -38,7 +38,7 @@ export class RegClientComponent {
 
   docTypes = ['CC', 'CE', 'Pasaporte'];
   sexes = ['Masculino', 'Femenino', 'Otro'];
-  genderIdentities = ['Masculino', 'Femenino', 'No binario', 'Otro'];
+  genderIdentities = ['Cisgénero', 'Transgénero', 'No binario', 'Otro'];
   ethnicGroups = ['Afrodescendiente', 'Indígena', 'Rom', 'Raizal', 'Caucásico', 'Otro'];
   disabilities = ['Ninguna', 'Visual', 'Auditiva', 'Cognitiva', 'Motriz', 'Otra'];
   cities = ['Manizales', 'Villamaría']
