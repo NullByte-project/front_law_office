@@ -1,0 +1,86 @@
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6 mt-6 hidden">
+    <h2 class="text-xl font-semibold text-center text-indigo-800">Estudio Socioeconómico</h2>
+  
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Tipo de vivienda -->
+      <div>
+        <label class="block text-gray-700 mb-1">Tipo de Vivienda</label>
+        <p-dropdown [options]="householdTypes" [(ngModel)]="socioForm.householdType" placeholder="Seleccione" class="w-full" />
+      </div>
+  
+      <!-- Profesión -->
+      <div>
+        <label class="block text-gray-700 mb-1">Ocupación / Profesión</label>
+        <input pInputText [(ngModel)]="socioForm.profession" class="w-full" />
+      </div>
+  
+      <!-- Ingreso personal -->
+        <div>
+            <label class="block text-gray-700 mb-1">Ingresos Personales</label>
+            <p-inputNumber [(ngModel)]="socioForm.personalIncome" inputId="personalIncome" mode="currency" currency="COP" locale="es-CO" class="w-full" />
+        </div>
+        
+        <!-- Ingreso familiar -->
+        <div>
+            <label class="block text-gray-700 mb-1">Ingresos Familiares</label>
+            <p-inputNumber [(ngModel)]="socioForm.familyIncome" inputId="familyIncome" mode="currency" currency="COP" locale="es-CO" class="w-full" />
+        </div>
+  
+      <!-- Personas que trabajan -->
+      <div>
+        <label class="block text-gray-700 mb-1">Personas que trabajan en el núcleo familiar</label>
+        <input type="number" pInputText [(ngModel)]="socioForm.workingHouseholdMembers" class="w-full" />
+      </div>
+  
+      <!-- Estrato socioeconómico -->
+      <div>
+        <label class="block text-gray-700 mb-1">Estrato Socioeconómico</label>
+        <p-dropdown [options]="socioeconomicLevels" [(ngModel)]="socioForm.socioeconomicLevel" placeholder="Seleccione" class="w-full" />
+      </div>
+  
+      <!-- Personas en el hogar -->
+      <div>
+        <label class="block text-gray-700 mb-1">Personas que conviven en el hogar</label>
+        <input type="number" pInputText [(ngModel)]="socioForm.householdSize" class="w-full" />
+      </div>
+  
+      <!-- Personas que dependen económicamente -->
+      <div>
+        <label class="block text-gray-700 mb-1">Personas que dependen económicamente del cliente</label>
+        <input type="number" pInputText [(ngModel)]="socioForm.financialDependents" class="w-full" />
+      </div>
+    </div>
+  
+    <!-- Sección booleana -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+      <!-- ¿Es dependiente económicamente? -->
+      <div class="flex items-center gap-2">
+        <p-checkbox [(ngModel)]="socioForm.isFinancialDependent" binary="true" inputId="depEco" />
+        <label for="depEco" class="text-gray-700">¿Es dependiente económicamente?</label>
+      </div>
+  
+      <!-- ¿El sostenedor puede pagar abogado? -->
+      <div *ngIf="socioForm.isFinancialDependent" class="flex items-center gap-2">
+        <p-checkbox [(ngModel)]="socioForm.supporterPayLawyer" binary="true" inputId="pagaAbogado" />
+        <label for="pagaAbogado" class="text-gray-700">¿El sostenedor puede pagar un abogado?</label>
+      </div>
+    </div>
+  
+    <!-- Descripción y comentarios -->
+    <div class="mt-4 space-y-4">
+      <div>
+        <label class="block text-gray-700 mb-1">Resultado del Estudio</label>
+        <p-dropdown [options]="results" [(ngModel)]="socioForm.result" placeholder="Seleccione" class="w-full" />
+      </div>
+  
+      <div>
+        <label class="block text-gray-700 mb-1">Comentarios</label>
+        <textarea pInputTextarea [(ngModel)]="socioForm.comments" rows="4" class="w-full border p-2 rounded-lg"></textarea>
+      </div>
+    </div>
+  
+    <div class="text-center mt-6">
+      <button pButton type="button" label="Guardar" class="bg-indigo-700 text-white px-6 py-2 rounded hover:bg-indigo-800"></button>
+    </div>
+  </div>
+  
