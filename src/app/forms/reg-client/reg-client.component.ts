@@ -7,8 +7,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
-import { ClientService } from '../../../services/client.service';
-import { AlertService } from '../../../services/alerts.service';
+import { ClientService } from '../../services/client.service';
+import { AlertService } from '../../services/alerts.service';
 import { Router } from '@angular/router';
 
 @Component({
