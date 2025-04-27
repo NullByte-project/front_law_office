@@ -41,25 +41,53 @@ export class SocioeconomicFormComponent {
   results = ['Favorable', 'Desfavorable', 'Pendiente'];
   socioeconomicLevels = ['Bajo', 'Medio', 'Alto'];
 
-  submitForm() {
-    const clientId = localStorage.getItem('clientId');
-    if (!clientId) {
-      this.alertService.error('Cliente no encontrado', 'No se encontró el ID del cliente en localStorage.');
-      return;
-    }
-
-    this.alertService.loading('Enviando estudio socioeconómico...');
-
-    this.clientService.updateSocioeconomicStudy(this.socioForm, clientId).subscribe({
-      next: (response) => {
-        this.alertService.success('Estudio registrado', 'El estudio socioeconómico fue enviado correctamente.')
-          .then(() => this.router.navigate(['/'])); // Aca deberia seguir al formulario para registrar la entrevista
-        console.log(response)
-      },
-      error: (err) => {
-        console.error(err);
-        this.alertService.error('Error', 'No se pudo enviar el estudio socioeconómico.');
-      }
-    });
+  goBack() { 
+    this.router.navigate(['/']);
   }
+
+  openProtocolo(){
+    this.alertService.showLargeModal('Protocolo', `
+      <p><strong>El Consultorio jurídico “DANIEL RESTREPO ESCOBAR”</strong> establece como corolario que el abordaje del usuario debe estar dotado de humanismo, empatía, respeto y profesionalismo.</p>
+      <p>En ese contexto, y con miras a determinar la capacidad económica y/o la condición de especial protección constitucional del usuario, se debe tener en cuenta lo dispuesto en el Artículo 8 de la Ley 2113 de 2021</p>
+      <p>Para determinar si un usuario reúne las condiciones establecidas:</p>
+      <ul style="text-align: center; margin-left: 1rem;">
+        <li>1) Verificar condición de especial protección constitucional.</li>
+        <li>2) Evaluar capacidad económica si no tiene protección constitucional.</li>
+      </ul>
+      <p>Fuentes de consulta:</p>
+      <ul style="text-align: center; margin-left: 1rem; font-size: 1rem; color: #3366BB;">
+        <li><a href="https://consultaprocesos.ramajudicial.gov.co/Procesos/NombreRazonSocial" target="_blank">Consulta de procesos</a></li>
+        <li><a href="https://certificados.supernotariado.gov.co/certificado" target="_blank">Supernotariado - Bienes raíces</a></li>
+        <li><a href="https://www.runt.com.co/consultaCiudadana/#/consultaPersona" target="_blank">RUNT - Propietario vehículo</a></li>
+        <li><a href="https://www.sispro.gov.co/central-prestadores-de-servicios/Pages/RUAF-Registro-Unico-de-Afiliados.aspx" target="_blank">RUAF - Afiliación</a></li>
+        <li><a href="https://www.rues.org.co/" target="_blank">RUES - Comerciante</a></li>
+        <li><a href="https://www.adres.gov.co/consulte-su-eps" target="_blank">ADRES - EPS</a></li>
+      </ul>
+      <p><strong>Pregunta guía:</strong><br>
+      “¿Si yo estuviera en la situación económica de este usuario, ¿contaría con los recursos suficientes para sufragar los gastos de un abogado?”</p>
+    `);
+  }
+
+  // submitForm() {
+  //   const clientId = localStorage.getItem('clientId');
+  //   if (!clientId) {
+  //     this.alertService.error('Cliente no encontrado', 'No se encontró el ID del cliente en localStorage.');
+  //     return;
+  //   }
+    
+
+  //   this.alertService.loading('Enviando estudio socioeconómico...');
+
+  //   this.clientService.updateSocioeconomicStudy(this.socioForm, clientId).subscribe({
+  //     next: (response) => {
+  //       this.alertService.success('Estudio registrado', 'El estudio socioeconómico fue enviado correctamente.')
+  //         .then(() => this.router.navigate(['/'])); // Aca deberia seguir al formulario para registrar la entrevista
+  //       console.log(response)
+  //     },
+  //     error: (err) => {
+  //       console.error(err);
+  //       this.alertService.error('Error', 'No se pudo enviar el estudio socioeconómico.');
+  //     }
+  //   });
+  // }
 }

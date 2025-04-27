@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, NavigationEnd, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { NavbarComponent } from './public/master-page/navbar/navbar.component';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,4 +14,12 @@ import { NavbarComponent } from './public/master-page/navbar/navbar.component';
 })
 export class AppComponent {
   title = 'front_law_office';
+
+  constructor(private router: Router) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+  }
 }

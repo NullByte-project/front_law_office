@@ -45,4 +45,20 @@ export class AlertService {
       cancelButtonText: 'Cancelar'
     });
   }
+
+  showLargeModal(title: string, htmlContent: string) {
+    return Swal.fire({
+      title: title,
+      html: htmlContent,
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      width: '60%',
+      customClass: {
+        popup: 'scrollable-modal'
+      },
+      scrollbarPadding: false,
+      allowOutsideClick: true,
+      allowEscapeKey: true,
+    });
+  }
 }

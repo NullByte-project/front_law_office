@@ -1,6 +1,14 @@
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6 mt-6">
     <h2 class="text-xl font-semibold text-center text-indigo-800">Estudio Socioeconómico</h2>
-  
+    <div class="text-center mt-6">
+      <button 
+        pButton 
+        type="button" 
+        label="Protocolo" 
+        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-center" 
+        (click)="openProtocolo()">
+      </button>
+    </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <!-- Tipo de vivienda -->
       <div>
@@ -56,7 +64,7 @@
       <!-- ¿Es dependiente económicamente? -->
       <div class="flex items-center gap-2">
         <p-checkbox [(ngModel)]="socioForm.isFinancialDependent" binary="true" inputId="depEco" />
-        <label for="depEco" class="text-gray-700">¿Es dependiente económicamente?</label>
+        <label for="depEco" class="text-gray-700">¿Es dependiente económicamente de alguna persona?</label>
       </div>
   
       <!-- ¿El sostenedor puede pagar abogado? -->
@@ -79,8 +87,22 @@
       </div>
     </div>
   
-    <div class="text-center mt-6">
-      <button pButton type="button" label="Guardar" class="bg-indigo-700 text-white px-6 py-2 rounded hover:bg-indigo-800" (click)="submitForm()"></button>
+    <div class="flex justify-center gap-4 mt-6">
+      <!-- Botón Retroceder -->
+      <button 
+        pButton 
+        type="button" 
+        label="Atrás" 
+        class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600" 
+        (click)="goBack()">
+      </button>
+      <!-- Botón Guardar -->
+      <button 
+        pButton 
+        type="button" 
+        label="Continuar" 
+        class="bg-indigo-700 text-white px-6 py-2 rounded hover:bg-indigo-800">
+      </button>
     </div>
   </div>
   
