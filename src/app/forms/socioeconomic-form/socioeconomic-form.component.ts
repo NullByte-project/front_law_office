@@ -68,6 +68,9 @@ export class SocioeconomicFormComponent {
     `);
   }
 
+  gotoToInterviewForm() {
+    this.router.navigate(['/entrevista']);
+  }
   // submitForm() {
   //   const clientId = localStorage.getItem('clientId');
   //   if (!clientId) {
