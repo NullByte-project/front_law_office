@@ -38,10 +38,22 @@ export class SocioeconomicFormComponent {
   constructor(private alertService: AlertService, private clientService: ClientService, private router: Router) {}
 
   householdTypes = ['Propia', 'Arrendada', 'Familiar'];
-  results = ['Favorable', 'Desfavorable', 'Pendiente'];
+  results = ['Favorable', 'Desfavorable'];
   socioeconomicLevels = ['Bajo', 'Medio', 'Alto'];
 
+  ngOnInit() {
+    const storedSocioForm = localStorage.getItem('socioForm');
+    if (storedSocioForm) {
+      this.socioForm = JSON.parse(storedSocioForm);
+      console.log('Datos del formulario socioeconómico cargados desde localStorage:', this.socioForm);
+    } else {
+      console.log('No se encontraron datos del formulario socioeconómico en localStorage.');
+    }
+  }
+
   goBack() { 
+    const socioFormData = JSON.stringify(this.socioForm);
+    localStorage.setItem('socioForm', socioFormData);
     this.router.navigate(['/']);
   }
 
@@ -69,6 +81,9 @@ export class SocioeconomicFormComponent {
   }
 
   gotoToInterviewForm() {
+    const socioFormData = JSON.stringify(this.socioForm);
+    localStorage.setItem('socioForm', socioFormData);
+    console.log(socioFormData);
     this.router.navigate(['/entrevista']);
   }
   // submitForm() {
