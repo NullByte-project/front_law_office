@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 import { InterviewFormComponent } from './interview-form.component';
 
