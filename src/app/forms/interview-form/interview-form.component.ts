@@ -37,12 +37,22 @@ export class InterviewFormComponent {
     address: '',
     residence: '',
     factualDescription: '',
-    responsible_id: 1,
-    cliente_id: null,
+    responsibleId: 1,
     legalConcept: '',
-    action: ''
+    action: '',
+    legalCase: {
+      folder: '',
+      legalAction: {
+        approvalCode: '',
+        procedure: null,
+        instructions: '',
+        additionalInfo: ''
+      }
+    },
+    client: {}
   };
- 
+  
+
   constructor(private alertService: AlertService, private clientService: ClientService, private interviewService: InterviewService,private router: Router) {}
  
  
@@ -127,7 +137,10 @@ export class InterviewFormComponent {
   
   ngOnInit() {
     // Verificar si hay datos en localStorage y cargarlos en el formulario
+    //localStorage.removeItem('interviewForm');
     const storedInterview = localStorage.getItem('interviewForm');
+    const storedClient = JSON.parse(localStorage.getItem('dataClient') || '{}');
+    this.interview.client = storedClient;
     if (storedInterview) {
       this.interview = JSON.parse(storedInterview);
       //console.log('Datos de la entrevista cargados desde localStorage:', this.interview);
@@ -140,50 +153,5 @@ export class InterviewFormComponent {
     const interviewData = JSON.stringify(this.interview);
     localStorage.setItem('interviewForm', interviewData);
     this.router.navigate(['/socioeconomico']);
-  }
-
-  submitInterview(){
-    this.alertService.loading('Se esta verificando la información...');
-    const storedClient = localStorage.getItem('dataClient');
-    if (storedClient){
-      const clientData = JSON.parse(storedClient);
-      console.log(clientData)
-      this.clientService.createClient(clientData).subscribe({
-        next: (client) => {
-          const storedSocioForm = localStorage.getItem('socioForm');
-          if (storedSocioForm) {
-            const socioData = JSON.parse(storedSocioForm);
-            //console.log(socioData)
-            this.clientService.updateSocioeconomicStudy(socioData, client.id).subscribe({
-              next: (response) => {
-                this.interview.cliente_id = client.id;
-                this.interviewService.createInterview(this.interview).subscribe({
-                  next: (interview) => {
-                    this.alertService.success('Entrevista creada con éxito!');
-                    localStorage.removeItem('dataClient');
-                    localStorage.removeItem('socioForm');
-                    localStorage.removeItem('interviewForm');
-                    this.router.navigate(['/']);
-                  },
-                  error: (error) => {
-                    this.alertService.error('Error al crear la entrevista: ' + error.message);
-                  }
-                });
-              },
-              error: (error) => {
-                this.alertService.error('Error al actualizar el estudio socioeconómico: ' + error.message);
-              }
-            });
-          } else {
-            return
-          }
-        },
-        error: (error) => {
-          this.alertService.error('Error al crear el cliente: ' + error.message);
-        }
-      });
-    } else {
-      return
-    }
-  }
+  }  
 }

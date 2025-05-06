@@ -19,20 +19,39 @@ import { Router } from '@angular/router';
   styleUrl: './socioeconomic-form.component.scss'
 })
 export class SocioeconomicFormComponent {
-  socioForm = {
-    householdType: '',
-    description: 'Descripcion',
-    result: '',
-    personalIncome: null,
-    profession: '',
-    familyIncome: null,
-    workingHouseholdMembers: null,
-    socioeconomicLevel: '',
-    householdSize: null,
-    financialDependents: null,
-    isFinancialDependent: false,
-    supporterPayLawyer: false,
-    comments: ''
+  client = {
+    name: '',
+    lastName: '',
+    secondLastName: '',
+    typeDoc: 'CC',
+    identification: '',
+    birthDate: null,
+    phone: '',
+    email: '',
+    address: '',
+    city: 'Manizales',
+    diferentialApproaches: {
+      sex: '',
+      genderIdentity: '',
+      ethnicGroup: '',
+      disability: '',
+      armedConflictVictim: false
+    },
+    socioeconomicStudy :{
+      householdType: '',
+      description: 'Descripcion',
+      result: '',
+      personalIncome: null,
+      profession: '',
+      familyIncome: null,
+      workingHouseholdMembers: null,
+      socioeconomicLevel: '',
+      householdSize: null,
+      financialDependents: null,
+      isFinancialDependent: false,
+      supporterPayLawyer: false,
+      comments: ''
+    }
   };
 
   constructor(private alertService: AlertService, private clientService: ClientService, private router: Router) {}
@@ -42,18 +61,17 @@ export class SocioeconomicFormComponent {
   socioeconomicLevels = ['Bajo', 'Medio', 'Alto'];
 
   ngOnInit() {
-    const storedSocioForm = localStorage.getItem('socioForm');
-    if (storedSocioForm) {
-      this.socioForm = JSON.parse(storedSocioForm);
-      console.log('Datos del formulario socioeconómico cargados desde localStorage:', this.socioForm);
+    const storedClient = localStorage.getItem('dataClient');
+    if (storedClient) {
+      this.client = JSON.parse(storedClient);
+      console.log('Datos del formulario socioeconómico cargados desde localStorage:', this.client);
     } else {
       console.log('No se encontraron datos del formulario socioeconómico en localStorage.');
     }
   }
 
   goBack() { 
-    const socioFormData = JSON.stringify(this.socioForm);
-    localStorage.setItem('socioForm', socioFormData);
+    localStorage.setItem('dataClient', JSON.stringify(this.client));
     this.router.navigate(['/']);
   }
 
@@ -81,11 +99,11 @@ export class SocioeconomicFormComponent {
   }
 
   gotoToInterviewForm() {
-    const socioFormData = JSON.stringify(this.socioForm);
-    localStorage.setItem('socioForm', socioFormData);
-    console.log(socioFormData);
+    localStorage.setItem('dataClient', JSON.stringify(this.client));
+    console.log(this.client);
     this.router.navigate(['/entrevista']);
   }
+  
   // submitForm() {
   //   const clientId = localStorage.getItem('clientId');
   //   if (!clientId) {
