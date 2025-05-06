@@ -36,11 +36,29 @@ export class RegClientComponent {
       ethnicGroup: '',
       disability: '',
       armedConflictVictim: false
+    },
+    socioeconomicStudy :{
+      householdType: '',
+      description: 'Descripcion',
+      result: '',
+      personalIncome: null,
+      profession: '',
+      familyIncome: null,
+      workingHouseholdMembers: null,
+      socioeconomicLevel: '',
+      householdSize: null,
+      financialDependents: null,
+      isFinancialDependent: false,
+      supporterPayLawyer: false,
+      comments: ''
     }
   };
 
   ngOnInit() {
     // Verificar si hay datos en localStorage y cargarlos en el formulario
+    //localStorage.removeItem('dataClient');
+    //localStorage.removeItem('socioForm');
+    //localStorage.removeItem('interviewForm');
     const storedClient = localStorage.getItem('dataClient');
     if (storedClient) {
       this.client = JSON.parse(storedClient);

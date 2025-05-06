@@ -1,5 +1,5 @@
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6 mt-6">
-    <h2 class="text-xl font-semibold text-center text-indigo-800">Entrevista</h2>
+    <h2 class="text-xl font-semibold text-center text-indigo-800">Especificaciones del caso</h2>
   
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <!-- Descripción Fáctica (en una fila) -->
@@ -7,17 +7,39 @@
         <label class="block text-gray-700 mb-1">Descripción Fáctica</label>
         <textarea pInputTextarea [(ngModel)]="interview.factualDescription" rows="4" class="w-full border border-gray-400 p-2 rounded-lg"></textarea>
       </div>
-  
-      <!-- Concepto Legal (en la misma fila que Acción) -->
-      <div>
+
+      <div class="col-span-2">
         <label class="block text-gray-700 mb-1">Concepto jurídico</label>
-        <input pInputText [(ngModel)]="interview.legalConcept" placeholder="Concepto jurídico aplicable al caso" class="w-full" />
+        <textarea pInputTextarea [(ngModel)]="interview.legalConcept" rows="4" class="w-full border border-gray-400 p-2 rounded-lg"></textarea>
+      </div>
+      <!-- Area -->
+      <div>
+        <label class="block text-gray-700 mb-1">Aréa a la que pertenece el proceso</label>
+        <p-dropdown placeholder="Seleccione" class="w-full" />
       </div>
   
-      <!-- Acción (en la misma fila que Concepto Legal) -->
+      <!-- Acción -->
       <div>
         <label class="block text-gray-700 mb-1">Acción</label>
         <p-dropdown [options]="actions" [(ngModel)]="interview.action" placeholder="Seleccione" class="w-full" />
+      </div>
+
+      <!-- Código -->
+      <div *ngIf="interview.action === 'Recepción'">
+        <label class="block text-gray-700 mb-1">Código de aprobación</label>
+        <input pInputText [(ngModel)]="interview.legalCase.legalAction.approvalCode" class="w-full"/>
+      </div>
+  
+      <!-- Proceso -->
+      <div *ngIf="interview.action === 'Recepción'">
+        <label class="block text-gray-700 mb-1">Proceso a recepcionar</label>
+        <p-dropdown [options]="actions" [(ngModel)]="interview.legalCase.legalAction.procedure" placeholder="Seleccione" class="w-full" />
+      </div>
+
+      <!-- Expediente -->
+      <div *ngIf="interview.action === 'Recepción'" class="col-span-2">
+        <label class="block text-gray-700 mb-1">Expedient</label>
+        <input pInputText [(ngModel)]="interview.legalCase.folder" class="w-full"/>
       </div>
     </div>
   
@@ -35,8 +57,7 @@
         pButton 
         type="button" 
         label="Continuar" 
-        class="bg-indigo-700 text-white px-6 py-2 rounded hover:bg-indigo-800"
-        (click)="submitInterview()">
+        class="bg-indigo-700 text-white px-6 py-2 rounded hover:bg-indigo-800">
       </button>
     </div>
   </div>
