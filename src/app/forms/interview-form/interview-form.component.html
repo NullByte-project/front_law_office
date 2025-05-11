@@ -1,181 +1,6 @@
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6 mt-6">
-  <h2 class="text-xl font-semibold text-center text-indigo-800">Entrevista Consultorio Jurídico Daniel Restrepo Escobar
-  </h2>
-  <div *ngIf="step === 1">
-    <!-- Notas legales -->
-    <div class="bg-gray-100 border-l-4 border-indigo-500 p-4 text-justify text-sm text-gray-700">
-      <p>
-        Este formulario será diligenciado por el abogado practicante en turno de asesoría.
-        <br /><br />
-        Nota: Los datos suministrados para este formato son responsabilidad del usuario. El consultorio Jurídico Daniel
-        Restrepo Escobar estará exento de toda responsabilidad derivada de los conceptos emitidos por el estudiante
-        practicante.
-        <br /><br />
-        Se le informa al usuario que los datos acá tratados, están sujetos a la Ley de Habeas Data (1581 de 2012) y
-        gozan de principio de confidencialidad. Además, de que son datos tratados con el fin de agenciar su caso de la
-        mejor manera.
-      </p>
-    </div>
-
-    <!-- Correo -->
-    <div>
-      <label class="block text-gray-700 mb-1">Correo <span class="text-red-500">*</span></label>
-      <input pInputText [(ngModel)]="interview.email" name="email" type="email" required
-        placeholder="Tu dirección de correo electrónico" class="w-full border border-gray-400 p-2 rounded-lg" />
-      <small *ngIf="formSubmitted && !interview.email" class="text-red-500">Este campo es obligatorio</small>
-    </div>
-
-    <!-- Identificación del encuestado -->
-    <div class="border-t border-gray-300 pt-6 mt-6">
-      <h3 class="text-lg font-semibold text-gray-800 mb-4">Identificación del encuestado</h3>
-
-      <!-- Nombre y Apellidos -->
-      <div class="mb-4">
-        <label class="block text-gray-700 mb-1">Nombre y Apellidos <span class="text-red-500">*</span></label>
-        <input pInputText [(ngModel)]="interview.fullName" name="fullName" type="text" required
-          placeholder="Nombre completo del encuestado" class="w-full border border-gray-400 p-2 rounded-lg" />
-        <small *ngIf="formSubmitted && !interview.fullName" class="text-red-500">Este campo es obligatorio</small>
-      </div>
-
-      <!-- Tipo de Documento -->
-      <div class="mb-4">
-        <label class="block text-gray-700 mb-1">Tipo de Documento <span class="text-red-500">*</span></label>
-        <div class="space-y-2">
-          <div *ngFor="let docType of documentTypes">
-            <p-radioButton name="docType" [value]="docType" [(ngModel)]="interview.documentType"
-              inputId="{{ docType }}" />
-            <label for="{{ docType }}" class="ml-2 text-gray-700">{{ docType }}</label>
-          </div>
-        </div>
-        <small *ngIf="formSubmitted && !interview.documentType" class="text-red-500">Seleccione una opción</small>
-      </div>
-
-      <!-- Número de Documento -->
-      <div class="mb-4">
-        <label class="block text-gray-700 mb-1">Nro. de Documento <span class="text-red-500">*</span></label>
-        <input pInputText [(ngModel)]="interview.documentNumber" name="documentNumber" type="text" required
-          placeholder="Ej: 123456789" class="w-full border border-gray-400 p-2 rounded-lg" />
-        <small *ngIf="formSubmitted && !interview.documentNumber" class="text-red-500">Este campo es obligatorio</small>
-      </div>
-    </div>
-
-   
-    <div class="flex justify-center gap-4 mt-6">
-      <button pButton type="button" label="Atrás" class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600"
-      (click)="goBack()">
-    </button>
-      <button pButton type="button" label="Continuar"
-        class="bg-indigo-700 text-white px-6 py-2 rounded hover:bg-indigo-800" (click)="nextStep(1)">
-      </button>
-    </div>
-  </div>
-
-<!-- Paso 2: Enfoque Diferencial y Contacto -->
-<div *ngIf="step === 2" class="space-y-6">
-  <h2 class="text-xl font-semibold text-center text-indigo-800">Información de Contacto y Enfoque Diferencial</h2>
-
-  <!-- Edad (Enfoque Etario) -->
-  <div>
-    <label class="block text-gray-700 mb-1">Edad (Enfoque Diferencial Etario) <span class="text-red-500">*</span></label>
-    <div class="space-y-2">
-      <div *ngFor="let range of ageRanges">
-        <p-radioButton
-          name="ageRange"
-          [value]="range"
-          [(ngModel)]="interview.ageRange"
-          inputId="{{ range }}"
-        />
-        <label for="{{ range }}" class="ml-2 text-gray-700">{{ range }}</label>
-      </div>
-    </div>
-    <small *ngIf="formSubmitted && !interview.ageRange" class="text-red-500">Seleccione una opción</small>
-  </div>
-
-  <!-- Teléfono -->
-  <div>
-    <label class="block text-gray-700 mb-1">Celular o Teléfono <span class="text-red-500">*</span></label>
-    <input
-      pInputText
-      [(ngModel)]="interview.phone"
-      name="phone"
-      required
-      placeholder="Ej: 3123456789"
-      class="w-full border border-gray-400 p-2 rounded-lg"
-    />
-    <small *ngIf="formSubmitted && !interview.phone" class="text-red-500">Este campo es obligatorio</small>
-  </div>
-
-  <!-- Correo Alternativo -->
-  <div>
-    <label class="block text-gray-700 mb-1">Correo Electrónico <span class="text-red-500">*</span></label>
-    <input
-      pInputText
-      [(ngModel)]="interview.altEmail"
-      name="altEmail"
-      type="email"
-      required
-      placeholder="correo@ejemplo.com"
-      class="w-full border border-gray-400 p-2 rounded-lg"
-    />
-    <small *ngIf="formSubmitted && !interview.altEmail" class="text-red-500">Este campo es obligatorio</small>
-  </div>
-
-  <!-- Dirección Física -->
-  <div>
-    <label class="block text-gray-700 mb-1">Dirección Física <span class="text-red-500">*</span></label>
-    <input
-      pInputText
-      [(ngModel)]="interview.address"
-      name="address"
-      required
-      class="w-full border border-gray-400 p-2 rounded-lg"
-    />
-    <small *ngIf="formSubmitted && !interview.address" class="text-red-500">Este campo es obligatorio</small>
-  </div>
-
-  <!-- Domicilio -->
-  <div>
-    <label class="block text-gray-700 mb-1">Domicilio <span class="text-red-500">*</span></label>
-    <div class="space-y-2">
-      <div *ngFor="let location of residenceOptions">
-        <p-radioButton
-          name="residence"
-          [value]="location"
-          [(ngModel)]="interview.residence"
-          inputId="{{ location }}"
-        />
-        <label for="{{ location }}" class="ml-2 text-gray-700">{{ location }}</label>
-      </div>
-    </div>
-    <small *ngIf="formSubmitted && !interview.residence" class="text-red-500">Seleccione una opción</small>
-  </div>
-
-  <!-- Botones -->
-  <div class="flex justify-center gap-4 mt-6">
-    <button
-      pButton
-      type="button"
-      label="Atrás"
-      class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600"
-      (click)="previousStep()">
-    </button>
-
-    <button
-      pButton
-      type="button"
-      label="Continuar"
-      class="bg-indigo-700 text-white px-6 py-2 rounded hover:bg-indigo-800"
-      (click)="nextStep(2)">
-    </button>
-  </div>
-</div>
-
-
-  <!-- Paso 2: Entrevista -->
-  <div *ngIf="step === 3" class="space-y-6">
-    <h2 class="text-xl font-semibold text-center text-indigo-800">Entrevista</h2>
-
-    <!-- Campos existentes -->
+    <h2 class="text-xl font-semibold text-center text-indigo-800">Especificaciones del caso</h2>
+  
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="col-span-2">
         <label class="block text-gray-700 mb-1">Descripción Fáctica</label>
@@ -183,25 +8,57 @@
           class="w-full border border-gray-400 p-2 rounded-lg"></textarea>
       </div>
 
-      <div>
+      <div class="col-span-2">
         <label class="block text-gray-700 mb-1">Concepto jurídico</label>
-        <input pInputText [(ngModel)]="interview.legalConcept" placeholder="Concepto jurídico aplicable al caso"
-          class="w-full" />
+        <textarea pInputTextarea [(ngModel)]="interview.legalConcept" rows="4" class="w-full border border-gray-400 p-2 rounded-lg"></textarea>
       </div>
-
+      <!-- Area -->
+      <div>
+        <label class="block text-gray-700 mb-1">Aréa a la que pertenece el proceso</label>
+        <p-dropdown [options]="areas" placeholder="Seleccione un aréa" class="w-full" (onChange)="onAreaChange($event.value)"/>
+      </div>
+  
+      <!-- Acción -->
       <div>
         <label class="block text-gray-700 mb-1">Acción</label>
-        <p-dropdown [options]="actions" [(ngModel)]="interview.action" placeholder="Seleccione" class="w-full" />
+        <p-dropdown [options]="actions" [(ngModel)]="interview.action" placeholder="Seleccione una acción" class="w-full" (onChange)="onActionChange($event.value)"/>
+      </div>
+
+      <!-- Código -->
+      <div *ngIf="interview.action === 'Recepción'">
+        <label class="block text-gray-700 mb-1">Código de aprobación</label>
+        <input pInputText [(ngModel)]="interview.legalCase.legalAction.approvalCode" class="w-full"/>
+      </div>
+  
+      <!-- Proceso -->
+      <div *ngIf="interview.action === 'Recepción'">
+        <label class="block text-gray-700 mb-1">Proceso a recepcionar</label>
+        <p-dropdown 
+          [options]="procedures" 
+          [(ngModel)]="interview.legalCase.legalAction.procedure" 
+          placeholder="Seleccione" 
+          class="w-full" 
+          [disabled]="!procedures.length"/>
+      </div>
+
+      <!-- Expediente -->
+      <div *ngIf="interview.action === 'Recepción'" class="col-span-2">
+        <label class="block text-gray-700 mb-1">Expedient</label>
+        <input pInputText [(ngModel)]="interview.legalCase.folder" class="w-full"/>
       </div>
     </div>
 
     <div class="flex justify-center gap-4 mt-6">
       <button pButton type="button" label="Atrás" class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600"
-        (click)="previousStep()">
+        (click)="goBack()">
       </button>
-
-      <button pButton type="button" label="Finalizar"
-        class="bg-indigo-700 text-white px-6 py-2 rounded hover:bg-indigo-800" (click)="submitInterview()">
+      <!-- Botón Guardar -->
+      <button 
+        pButton 
+        type="button" 
+        label="Enviar" 
+        class="bg-indigo-700 text-white px-6 py-2 rounded hover:bg-indigo-800"
+        (click)="submitInterview()">
       </button>
     </div>
  
