@@ -83,6 +83,10 @@ export class RegClientComponent {
     this.router.navigate(['/socioeconomico']);
   }
 
+  gotoCasesOverview() {
+    this.router.navigate(['/']);
+  }
+
   // submitForm() {
   //   this.alertService.loading('Cargando...');
   //   this.clientService.createClient(this.client).subscribe({

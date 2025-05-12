@@ -1,0 +1,74 @@
+<div class="bg-[#e4e1f1] min-h-screen p-6">
+  <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
+    <div>
+      <h1 class="text-2xl font-semibold text-gray-900">
+        Visualización de casos<br />
+        y entrevistas
+      </h1>
+    </div>
+  </div>
+
+  <!-- Fila combinada de buscador + botones -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <!-- Buscador -->
+    <div class="relative w-full md:w-1/2">
+      <input
+        pInputText
+        placeholder="Busca por número de caso, cliente, estado..."
+        class="w-full p-3 pr-10 rounded shadow-md border border-gray-300"
+      />
+      <i class="pi pi-search absolute right-3 top-3 text-gray-500"></i>
+    </div>
+
+    <!-- Botones -->
+    <div class="flex gap-2 shrink-0">
+      <button
+        pButton
+        icon="pi pi-filter"
+        class="p-2 rounded bg-gray-300 hover:bg-gray-400 text-white"
+      ></button>
+      <button
+        pButton
+        icon="pi pi-download"
+        class="p-2 rounded bg-gray-300 hover:bg-gray-400 text-white"
+      ></button>
+      <button
+        pButton
+        icon="pi pi-plus"
+        label="Nueva Entrevista"
+        class="bg-indigo-800 hover:bg-indigo-900 text-white px-3 py-2 rounded shadow-md"
+        (click)="gotoIntervew()"
+      ></button>
+    </div>
+  </div>
+
+  <!-- Tarjetas -->
+  <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div
+      *ngFor="let case of [1, 2, 3, 4, 5, 6]"
+      class="bg-white rounded shadow-md p-4 relative hover:shadow-lg transition-all"
+    >
+      <span
+        class="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-1 rounded-full"
+        >urgente</span
+      >
+      <div class="flex items-center gap-2 mb-2">
+        <i class="pi pi-hashtag text-xl text-gray-700"></i>
+        <span class="text-sm font-semibold text-gray-700">22134</span>
+      </div>
+      <div class="flex items-center gap-2 mb-2">
+        <i class="pi pi-user text-xl text-gray-700"></i>
+        <span class="text-sm text-gray-800">Nombre cliente</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <i class="pi pi-align-justify text-xl text-gray-700"></i>
+        <span class="text-sm text-gray-800 truncate"
+          >Violencia Intrafamiliar...</span
+        >
+      </div>
+      <div class="mt-4 flex justify-end">
+        <img alt="doc icon" class="w-16 h-16" />
+      </div>
+    </div>
+  </div>
+</div>

@@ -72,7 +72,7 @@ export class SocioeconomicFormComponent {
 
   goBack() { 
     localStorage.setItem('dataClient', JSON.stringify(this.client));
-    this.router.navigate(['/']);
+    this.router.navigate(['/datos-cliente']);
   }
 
   openProtocolo(){
