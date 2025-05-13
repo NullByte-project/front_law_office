@@ -28,6 +28,21 @@
             "assets": [
               {
                 "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "src",
+                "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/primeicons/primeicons",
+                "output": "/primeicons"
+              },
+              {
+                "glob": "**/*",
                 "input": "public"
               }
             ],

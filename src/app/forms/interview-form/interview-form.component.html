@@ -25,13 +25,13 @@
       </div>
 
       <!-- Código -->
-      <div *ngIf="interview.action === 'Recepción'">
+      <div *ngIf="interview.action === 'recepcion'">
         <label class="block text-gray-700 mb-1">Código de aprobación</label>
         <input pInputText [(ngModel)]="interview.legalCase.legalAction.approvalCode" class="w-full"/>
       </div>
   
       <!-- Proceso -->
-      <div *ngIf="interview.action === 'Recepción'">
+      <div *ngIf="interview.action === 'recepcion'">
         <label class="block text-gray-700 mb-1">Proceso a recepcionar</label>
         <p-dropdown 
           [options]="procedures" 
@@ -42,7 +42,7 @@
       </div>
 
       <!-- Expediente -->
-      <div *ngIf="interview.action === 'Recepción'" class="col-span-2">
+      <div *ngIf="interview.action === 'recepcion'" class="col-span-2">
         <label class="block text-gray-700 mb-1">Expedient</label>
         <input pInputText [(ngModel)]="interview.legalCase.folder" class="w-full"/>
       </div>

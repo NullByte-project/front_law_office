@@ -61,7 +61,7 @@ export class InterviewFormComponent {
               private interviewService: InterviewService,private router: Router,
               private procedureService: ProceduresService) {}
 
-  actions = ['Asesoría', 'Recepción', 'Documento de turno'];
+  actions = ['Asesoría', 'recepcion', 'Documento de turno'];
     
   ngOnInit() {
     // Verificar si hay datos en localStorage y cargarlos en el formulario
