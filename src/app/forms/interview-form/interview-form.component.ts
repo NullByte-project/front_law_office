@@ -121,7 +121,7 @@ export class InterviewFormComponent {
   }
 
   submitInterview() {
-    //console.log('Entrevista:', this.interview);
+    console.log('Entrevista:', this.interview);
     this.alertService.loading('Creando entrevista...');
     this.interviewService.createInterview(this.interview).subscribe({
       next: (response) => {

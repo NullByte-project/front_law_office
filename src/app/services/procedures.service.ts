@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ConfigRoutesBackend } from '../config/config.ruotes.backend';
+import { ConfigRoutesBackend } from '../config/config.routes.backend';
 
 @Injectable({
   providedIn: 'root'
