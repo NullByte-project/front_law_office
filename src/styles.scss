@@ -3,3 +3,25 @@
 body {
     @apply bg-[#e4e3f0]; /* Puedes usar cualquier color de Tailwind o código HEX */
 }
+
+.btn-principal {
+  background-color: #2e2c88 !important;
+  color: white !important;
+  border: none !important;
+  transition: background-color 0.2s ease;
+}
+
+.btn-principal:hover {
+  background-color: #1e1a70 !important;
+}
+
+.btn-secundary{
+    background-color: #c0c0c0 !important;
+    color: #6f6f6f !important;
+    border: none !important;
+    transition: background-color 0.2s ease;
+}
+
+.btn-secundary:hover {
+    background-color: #a5a5a5 !important;
+}
