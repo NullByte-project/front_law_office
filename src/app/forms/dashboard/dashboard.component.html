@@ -1,60 +1,85 @@
-<div class="mx-8">
-<h2 class="text-2xl font-bold mb-4">Información de caso</h2>
+<div class="max-w-7xl mx-auto p-6 space-y-6">
+  <!-- Título -->
+  <h2 class="text-2xl font-bold text-gray-800 mb-4">Información del Caso</h2>
 
-<div class="flex gap-4">
-  <!-- Tabla de Casos -->
-  <div class="flex-1-5 bg-white shadow-md rounded p-4">
-    <h3 class="text-lg font-semibold mb-2">Casos</h3>
-    <p-table [value]="casos" [paginator]="true" [rows]="5" responsiveLayout="scroll">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Concepto Legal</th>
-          <th>Cliente</th>
-          <th>Responsable</th>
-          <th>Estado</th>
-          <th>Fecha Radicado</th>
-          <th>Detalles</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-caso>
-        <tr>
-          <td>{{ caso.concepto }}</td>
-          <td>{{ caso.cliente }}</td>
-          <td>{{ caso.responsable }}</td>
-          <td>{{ caso.estado }}</td>
-          <td>{{ caso.fecha }}</td>
-          <td>
-            <button pButton type="button" icon="pi pi-eye" class="p-button-text"></button>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+  <!-- Datos generales del caso -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div>
+      <p class="text-sm text-gray-500">Fecha de Creación:</p>
+      <p class="text-base font-medium">{{ caseData?.creationDate | date: 'mediumDate' }}</p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500">Estado:</p>
+      <p class="text-base font-medium">{{ caseData?.state }}</p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500">Carpeta:</p>
+      <p class="text-base font-medium">{{ caseData?.folder }}</p>
+    </div>
   </div>
 
-  <!-- Tabla de Clientes -->
-  <div class="flex-1 bg-white shadow-md rounded p-4">
-    <h3 class="text-lg font-semibold mb-2">Clientes</h3>
-    <p-table [value]="clientes" [paginator]="true" [rows]="5" responsiveLayout="scroll">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Nombre Completo</th>
-          <th>Identificación</th>
-          <th>ID Caso</th>
-          <th>Concepto Legal</th>
-          <th>Detalles</th>
+  <!-- Cards paralelas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Card: Cliente -->
+    <div class="bg-white rounded-lg shadow p-4 relative">
+      <h3 class="text-lg font-semibold text-gray-800 mb-2">Datos del Cliente</h3>
 
-        </tr> 
-      </ng-template>
-      <ng-template pTemplate="body" let-cliente>
-        <tr>
-          <td>{{ cliente.nombre }}</td>
-          <td>{{ cliente.identificacion }}</td>
-          <td>{{ cliente.idCaso }}</td>
-          <td>{{ cliente.concepto }}</td>
-          <td>{{ cliente.detalles }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
+      <p class="text-sm text-gray-500">Nombre completo:</p>
+      <p class="mb-2">{{ getClientFullName() || 'No registrado' }}</p>
+
+      <p class="text-sm text-gray-500">Identificación:</p>
+      <p class="mb-2">{{ caseData?.interview?.clientId?.identification || 'No disponible' }}</p>
+
+      <p class="text-sm text-gray-500">Teléfono:</p>
+      <p class="mb-2">{{ caseData?.interview?.clientId?.phone || 'No disponible' }}</p>
+
+      <p class="text-sm text-gray-500">Ciudad:</p>
+      <p class="mb-2">{{ caseData?.interview?.clientId?.city || 'No disponible' }}</p>
+
+      <!-- Ícono de expansión (esquina inferior derecha) -->
+      <button (click)="toggleExpand('client')"
+        class="absolute bottom-2 right-2 text-gray-500 hover:text-indigo-600 transition"
+        title="Expandir información del cliente">
+        <i class="pi pi-expand text-xl"></i> gud
+      </button>
+
+      <!-- Sección expandida -->
+      <div *ngIf="expanded.client" class="mt-4 border-t border-gray-200 pt-4 text-sm text-gray-700 space-y-2">
+        <div><strong>Correo:</strong> {{ caseData?.interview?.clientId?.email || 'N/A' }}</div>
+        <div><strong>Dirección:</strong> {{ caseData?.interview?.clientId?.address || 'N/A' }}</div>
+        <div><strong>Tipo de Documento:</strong> {{ caseData?.interview?.clientId?.typeDoc || 'N/A' }}</div>
+        <div><strong>Fecha de nacimiento:</strong> {{ caseData?.interview?.clientId?.birthDate || 'N/A' }}</div>
+      </div>
+    </div>
+
+
+ <!-- Card: Acciones legales -->
+<div class="bg-white rounded-lg shadow p-4">
+  <h3 class="text-lg font-semibold text-gray-800 mb-2">Acciones Legales</h3>
+
+  <div *ngFor="let action of caseData?.legalActions; let i = index" class="mb-6 border-b border-gray-200 pb-4 relative">
+    <p class="text-sm text-gray-500">Nombre del Procedimiento:</p>
+    <p class="font-medium">{{ action.procedure?.name }}</p>
+
+    <p class="text-sm text-gray-500">Área jurídica:</p>
+    <p class="mb-2">{{ getLegalArea(action.procedure?.areaId) }}</p>
+
+    <p class="text-sm text-gray-500">Descripción:</p>
+    <p class="text-gray-700 mb-8">{{ action.procedure?.description }}</p>
+
+    <!-- Botón de expansión por cada acción legal -->
+    <button
+      (click)="toggleLegalExpand(i)"
+      class="absolute bottom-2 right-2 text-gray-500 hover:text-indigo-600 transition"
+      title="Expandir información legal">
+      <i class="pi pi-expand text-xl">s</i>
+    </button>
+
+    <!-- Contenido expandido para esta acción -->
+    <div *ngIf="expanded.legal[i]" class="mt-4 border-t border-gray-200 pt-3 text-sm text-gray-700 space-y-1">
+      <div><strong>Instrucciones:</strong> {{ action.instructions }}</div>
+      <div><strong>Info adicional:</strong> {{ action.additionalInfo }}</div>
+    </div>
   </div>
 </div>
-</div>
+
