@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';; // Ajusta según estructura
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -57,6 +57,50 @@ toggleExpand(section: 'client') {
 
 toggleLegalExpand(index: number): void {
   this.expanded.legal[index] = !this.expanded.legal[index];
+}
+
+
+
+showLegalForm = false;
+
+legalForm = {
+  instructions: '',
+  additionalInfo: ''
+};
+
+closeLegalForm(): void {
+  this.showLegalForm = false;
+  this.legalForm = {
+    instructions: '',
+    additionalInfo: ''
+  };
+}
+
+submitLegalAction(): void {
+  this.dashboardService.generateApprovalCode().subscribe({
+    next: (codeData) => {
+      const approvalCode = codeData.code;
+      const actionData = {
+        approvalCode: approvalCode,
+        procedure: 5, // Lo haremos dinámico luego
+        instructions: this.legalForm.instructions,
+        additionalInfo: this.legalForm.additionalInfo
+      };
+
+      this.dashboardService.addLegalAction(this.caseData.id, actionData).subscribe({
+        next: () => {
+          this.closeLegalForm();
+          this.loadCase(this.caseData.id);
+        },
+        error: (err) => {
+          console.error('Error al guardar acción legal:', err);
+        }
+      });
+    },
+    error: (err) => {
+      console.error('Error al generar código de aprobación:', err);
+    }
+  });
 }
 
 
