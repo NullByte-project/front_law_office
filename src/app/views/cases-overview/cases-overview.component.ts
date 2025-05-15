@@ -14,11 +14,24 @@ import { CasesService } from '../../services/cases.service';
 export class CasesOverviewComponent {
 
   cases: any[] = [];
-
+  areaId: number = 4; // Cambia esto según el área que necesites
+  
   constructor(private router: Router, private casesService: CasesService) { }
+  
+  /*
+  getAsistentArea(areaId: number): string {
+    const areas: Record<number, string> = {
+      1: 'Civil',
+      2: 'Penal', 
+      3: 'Laboral',
+      4: 'Derecho familiar'
+    };
+    return areas[areaId] || 'Área no especificada';
+  }
+  */
 
   ngOnInit(): void {
-    this.getCasesForArea(4)
+    this.getCasesForArea(this.areaId);
   }
 
   gotoIntervew(){
@@ -36,6 +49,15 @@ export class CasesOverviewComponent {
       }
     })
   }
+
+
+goToDashboard(caseId: number, areaId: number): void {
+  this.router.navigate(['/dashboard', caseId], {
+    queryParams: { area: areaId }
+  
+  });
+  console.log('sirve para ir al dashboard', caseId, areaId);
+}
 
 
 }

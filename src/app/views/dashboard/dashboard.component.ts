@@ -3,21 +3,32 @@ import { DashboardService } from '../../services/dashboard.service';; // Ajusta 
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, FormsModule, RouterModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
   caseData: any = null;
+  caseAreaId: number | null = null;
+  constructor(private dashboardService: DashboardService, private route: ActivatedRoute) {}
 
-  constructor(private dashboardService: DashboardService) {}
+ngOnInit(): void {
+  const id = Number(this.route.snapshot.paramMap.get('id'));
+  const area = Number(this.route.snapshot.queryParamMap.get('area'));
 
-  ngOnInit(): void {
-    this.loadCase(4); // Puedes hacer esto dinámico después
-  }
+  this.loadCase(id);
+
+  console.log('Área recibida:', area);
+  this.caseAreaId = area;
+
+}
+
+
 
   loadCase(id: number): void {
     this.dashboardService.getCaseById(id).subscribe({
