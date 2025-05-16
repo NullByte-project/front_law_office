@@ -23,4 +23,22 @@ export class DashboardService {
   addLegalAction(caseId: number, actionData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}add-legal-action?caseId=${caseId}`, actionData);
   }
+
+getProceduresByArea(areaId: number): Observable<any[]> {
+  return this.http.get<any[]>(`${ConfigRoutesBackend.procedures}get-by-area/${areaId}`);
+}
+
+getStagesByLegalAction(legalActionId: number): Observable<any[]> {
+  return this.http.get<any[]>(`${ConfigRoutesBackend.legalActions}get-by-legal-action/${legalActionId}`);
+}
+
+getAllStages(): Observable<any[]> {
+  return this.http.get<any[]>('http://localhost:8081/api/stages/all');
+}
+
+createStageForLegalAction(data: any): Observable<any> {
+  return this.http.post<any>('http://localhost:8081/api/stages-legal-action/create', data);
+}
+
+
 }

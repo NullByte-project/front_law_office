@@ -17,17 +17,45 @@ export class DashboardComponent implements OnInit {
   caseAreaId: number | null = null;
   constructor(private dashboardService: DashboardService, private route: ActivatedRoute) {}
 
+
+procedures: any[] = [];
+selectedProcedureId: number | null = null;
+
+selectedLegalActionId: number | null = null;
+stages: any[] = [];
+showStagesSection: boolean = false;
+
+showStageForm = false;
+availableStages: any[] = [];
+
+newStageForm = {
+  stageId: null,
+  internalDeadline: '',
+  comments: ''
+};
+
+
 ngOnInit(): void {
   const id = Number(this.route.snapshot.paramMap.get('id'));
   const area = Number(this.route.snapshot.queryParamMap.get('area'));
-
-  this.loadCase(id);
-
-  console.log('Área recibida:', area);
   this.caseAreaId = area;
 
+  this.loadCase(id);
+  this.loadProcedures(area);
 }
 
+
+
+loadProcedures(areaId: number): void {
+  this.dashboardService.getProceduresByArea(areaId).subscribe({
+    next: (data) => {
+      this.procedures = data;
+    },
+    error: (err) => {
+      console.error('Error cargando procedimientos:', err);
+    }
+  });
+}
 
 
   loadCase(id: number): void {
@@ -88,12 +116,18 @@ closeLegalForm(): void {
 }
 
 submitLegalAction(): void {
+  if (!this.selectedProcedureId) {
+    alert('Debe seleccionar un procedimiento.');
+    return;
+  }
+
   this.dashboardService.generateApprovalCode().subscribe({
     next: (codeData) => {
       const approvalCode = codeData.code;
+
       const actionData = {
         approvalCode: approvalCode,
-        procedure: 5, // Lo haremos dinámico luego
+        procedure: this.selectedProcedureId,
         instructions: this.legalForm.instructions,
         additionalInfo: this.legalForm.additionalInfo
       };
@@ -101,18 +135,80 @@ submitLegalAction(): void {
       this.dashboardService.addLegalAction(this.caseData.id, actionData).subscribe({
         next: () => {
           this.closeLegalForm();
-          this.loadCase(this.caseData.id);
+          this.loadCase(this.caseData.id); // Refresca la vista
         },
         error: (err) => {
-          console.error('Error al guardar acción legal:', err);
+          console.error('Error al agregar acción legal:', err);
         }
       });
     },
     error: (err) => {
-      console.error('Error al generar código de aprobación:', err);
+      console.error('Error generando código de aprobación:', err);
     }
   });
 }
+
+
+onLegalActionClick(legalActionId: number): void {
+  this.selectedLegalActionId = legalActionId;
+  this.showStagesSection = true;
+
+  this.dashboardService.getStagesByLegalAction(legalActionId).subscribe({
+    next: (data) => {
+      this.stages = data;
+    },
+    error: (err) => {
+      console.error('Error al obtener etapas:', err);
+    }
+  });
+}
+
+openStageForm(): void {
+  this.showStageForm = true;
+  this.dashboardService.getAllStages().subscribe({
+    next: (data) => {
+      this.availableStages = data;
+    },
+    error: (err) => console.error('Error cargando stages:', err)
+  });
+}
+
+closeStageForm(): void {
+  this.showStageForm = false;
+  this.newStageForm = {
+    stageId: null,
+    internalDeadline: '',
+    comments: ''
+  };
+}
+
+submitStageForm(): void {
+  const today = new Date();
+  const selectedDate = new Date(this.newStageForm.internalDeadline);
+
+  if (selectedDate <= today) {
+    alert('La fecha límite debe ser futura.');
+    return;
+  }
+
+  const payload = {
+    stageId: this.newStageForm.stageId,
+    internalDeadline: this.newStageForm.internalDeadline,
+    comments: this.newStageForm.comments,
+    legalActionId: this.selectedLegalActionId
+  };
+
+  this.dashboardService.createStageForLegalAction(payload).subscribe({
+    next: () => {
+      this.closeStageForm();
+      if (this.selectedLegalActionId) {
+        this.onLegalActionClick(this.selectedLegalActionId); // Recargar etapas
+      }
+    },
+    error: (err) => console.error('Error al crear etapa:', err)
+  });
+}
+
 
 
 }
