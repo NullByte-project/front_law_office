@@ -4,6 +4,8 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { Router } from '@angular/router';
 import { CasesService } from '../../services/cases.service';
+import { ClientService } from '../../services/client.service';
+
 @Component({
   selector: 'app-cases-overview',
   imports: [ButtonModule, InputTextModule, CommonModule],
@@ -16,7 +18,7 @@ export class CasesOverviewComponent {
   cases: any[] = [];
   areaId: number = 4; // Cambia esto según el área que necesites
   
-  constructor(private router: Router, private casesService: CasesService) { }
+  constructor(private router: Router, private casesService: CasesService, private clientService: ClientService) { }
   
   /*
   getAsistentArea(areaId: number): string {
@@ -41,6 +43,27 @@ export class CasesOverviewComponent {
   getCasesForArea(areaId: number) {
     this.casesService.getCasesForArea(areaId).subscribe({
       next:(response) => {
+        for (let i = 0; i < response.length; i++) {
+          let caseId = response[i].id;
+          this.casesService.getCaseById(caseId).subscribe({
+            next: (caseResponse) => {
+              let clientId = caseResponse.interview.clientId.id;
+              this.clientService.getClientById(clientId).subscribe({
+                next: (clientResponse) => {
+                  caseResponse.interview.clientId = clientResponse;
+                },
+                error: (error) => {
+                  console.error('Error fetching client:', error);
+                }
+              });
+              this.cases[i] = caseResponse;
+              console.log('Case fetched successfully:', caseResponse);
+            },
+            error: (error) => {
+              console.error('Error fetching case:', error);
+            }
+          });
+        }
         this.cases = response;
         console.log('Cases fetched successfully:', this.cases);
       },

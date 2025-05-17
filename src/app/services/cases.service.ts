@@ -14,4 +14,8 @@ export class CasesService {
   getCasesForArea(areaId: number): Observable<any> {
     return this.http.get<any>(`${this.urlCases}get-by-area/${areaId}`);
   }
+
+  getCaseById(caseId: number): Observable<any> {
+    return this.http.get<any>(`${this.urlCases}get-by-id/${caseId}`);
+  }
 }

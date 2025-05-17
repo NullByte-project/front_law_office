@@ -20,4 +20,8 @@ export class ClientService {
   updateSocioeconomicStudy(socioData: any, idclient: String) {
     return this.http.put(`${this.urlClients}socioeconomicStudy/${idclient}`, socioData);
   }
+
+  getClientById(idclient: String): Observable<any> {
+    return this.http.get<any>(`${this.urlClients}${idclient}`);
+  }
 }
