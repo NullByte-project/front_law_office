@@ -78,6 +78,7 @@ export class RegClientComponent {
 
   gotoToSocioeconomicForm() {
     let dataClient = JSON.stringify(this.client);
+    console.log('Datos del cliente:', dataClient);
     localStorage.setItem('dataClient', dataClient);
     console.log('Cliente guardado en localStorage:', dataClient);
     this.router.navigate(['/socioeconomico']);

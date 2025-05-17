@@ -66,7 +66,7 @@ loadProcedures(areaId: number): void {
   }
 
   getClientFullName(): string {
-    const c = this.caseData?.interview?.clientId;
+    const c = this.caseData?.interview?.client;
     if (!c) return '';
     return [c.name, c.lastName, c.secondLastName].filter(Boolean).join(' ');
   }

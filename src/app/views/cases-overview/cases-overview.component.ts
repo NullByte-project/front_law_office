@@ -47,10 +47,10 @@ export class CasesOverviewComponent {
           let caseId = response[i].id;
           this.casesService.getCaseById(caseId).subscribe({
             next: (caseResponse) => {
-              let clientId = caseResponse.interview.clientId.id;
+              let clientId = caseResponse.interview.client.id;
               this.clientService.getClientById(clientId).subscribe({
                 next: (clientResponse) => {
-                  caseResponse.interview.clientId = clientResponse;
+                  caseResponse.interview.client = clientResponse;
                 },
                 error: (error) => {
                   console.error('Error fetching client:', error);
