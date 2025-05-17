@@ -28,13 +28,13 @@
       <p class="mb-2">{{ getClientFullName() || 'No registrado' }}</p>
 
       <p class="text-sm text-gray-500">Identificación:</p>
-      <p class="mb-2">{{ caseData?.interview?.clientId?.identification || 'No disponible' }}</p>
+      <p class="mb-2">{{ caseData?.interview?.client?.identification || 'No disponible' }}</p>
 
       <p class="text-sm text-gray-500">Teléfono:</p>
-      <p class="mb-2">{{ caseData?.interview?.clientId?.phone || 'No disponible' }}</p>
+      <p class="mb-2">{{ caseData?.interview?.client?.phone || 'No disponible' }}</p>
 
       <p class="text-sm text-gray-500">Ciudad:</p>
-      <p class="mb-2">{{ caseData?.interview?.clientId?.city || 'No disponible' }}</p>
+      <p class="mb-2">{{ caseData?.interview?.client?.city || 'No disponible' }}</p>
 
       <!-- Ícono de expansión (esquina inferior derecha) -->
       <button (click)="toggleExpand('client')"
@@ -45,10 +45,10 @@
 
       <!-- Sección expandida -->
       <div *ngIf="expanded.client" class="mt-4 border-t border-gray-200 pt-4 text-sm text-gray-700 space-y-2">
-        <div><strong>Correo:</strong> {{ caseData?.interview?.clientId?.email || 'N/A' }}</div>
-        <div><strong>Dirección:</strong> {{ caseData?.interview?.clientId?.address || 'N/A' }}</div>
-        <div><strong>Tipo de Documento:</strong> {{ caseData?.interview?.clientId?.typeDoc || 'N/A' }}</div>
-        <div><strong>Fecha de nacimiento:</strong> {{ caseData?.interview?.clientId?.birthDate || 'N/A' }}</div>
+        <div><strong>Correo:</strong> {{ caseData?.interview?.client?.email || 'N/A' }}</div>
+        <div><strong>Dirección:</strong> {{ caseData?.interview?.client?.address || 'N/A' }}</div>
+        <div><strong>Tipo de Documento:</strong> {{ caseData?.interview?.client?.typeDoc || 'N/A' }}</div>
+        <div><strong>Fecha de nacimiento:</strong> {{ caseData?.interview?.client?.birthDate || 'N/A' }}</div>
       </div>
     </div>
 
