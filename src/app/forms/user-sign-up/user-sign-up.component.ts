@@ -1,33 +1,77 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { UserRegisterService } from '../../services/user-register.service';
+import { AlertService } from '../../services/alerts.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-sign-up',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonModule],
+  imports: [CommonModule, ReactiveFormsModule, ButtonModule],
   templateUrl: './user-sign-up.component.html',
   styleUrl: './user-sign-up.component.scss'
 })
-export class UserSignUpComponent {
-  user = {
-    name: '',
-    lastName: '',
-    secondLastName: '',
-    email: '',
-    phone: '',
-    student_code: '',
-    practice_level: '',
-    speciality: '',
-    document: '',
-    type_document: '',
-    gender: '',
-    password: ''
-  };
+export class UserSignUpComponent implements OnInit {
+  form!: FormGroup;
+  allUsernames: string[] = [];
+  usernameTaken = false;
+  passwordMismatch = false;
 
-  submitUser() {
-    console.log('Usuario a registrar:', this.user);
-    // Aquí puedes llamar al servicio para enviar el POST al backend
+  constructor(private fb: FormBuilder, private userService: UserRegisterService, 
+    private alertService: AlertService) {}
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      username: ['', [Validators.required, Validators.pattern(/^[^\s]+$/)]],
+      password: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{6,}$/)]],
+      confirmPassword: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern(/^3\d{9}$/)]]
+    });
+
+    this.userService.getAllUsers().subscribe(users => {
+      this.allUsernames = users.map((u: any) => u.username.toLowerCase());
+    });
+  }
+
+  checkUsername(): void {
+    const input = this.form.get('username')?.value?.toLowerCase();
+    this.usernameTaken = this.allUsernames.includes(input);
+  }
+
+  submitUser(): void {
+    this.passwordMismatch = this.form.value.password !== this.form.value.confirmPassword;
+
+    if (this.form.invalid || this.usernameTaken || this.passwordMismatch) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const user = {
+      username: this.form.value.username,
+      password: this.form.value.password,
+      email: this.form.value.email,
+      phone: this.form.value.phone,
+      role: 'estudiante'
+    };
+
+  
+    this.alertService.loading('Registrando usuario...');
+
+this.userService.registerUser(user).subscribe({
+  next: () => {
+    Swal.close(); // Cierra el loading
+    this.alertService.success('Registro exitoso', 'El usuario fue creado correctamente.');
+    this.form.reset(); // Opcional: limpiar formulario
+  },
+  error: (err) => {
+    Swal.close();
+    this.alertService.error('Registro fallido', 'No se pudo registrar el usuario. Verifica los datos.');
+  }
+});
+
+    
   }
 }

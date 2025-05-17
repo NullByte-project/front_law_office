@@ -1,103 +1,57 @@
-<div class="max-w-4xl mx-auto bg-white shadow-md rounded-xl p-8 space-y-6 mt-10">
-  <h2 class="text-2xl font-bold text-center text-indigo-800">Registro de Estudiante</h2>
+<div class="max-w-xl mx-auto bg-white shadow-md rounded-xl p-8 mt-10 space-y-6">
+  <h2 class="text-2xl font-bold text-center text-indigo-800">Registro Estudiante</h2>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <!-- Nombre -->
-    <div>
-      <label class="block text-gray-700 mb-1">Nombre</label>
-      <input type="text" class="w-full border border-gray-300 rounded p-2" [(ngModel)]="user.name">
-    </div>
+  <form [formGroup]="form" (ngSubmit)="submitUser()" class="space-y-4">
 
-    <!-- Apellido -->
+    <!-- Username -->
     <div>
-      <label class="block text-gray-700 mb-1">Apellido</label>
-      <input type="text" class="w-full border border-gray-300 rounded p-2" [(ngModel)]="user.lastName">
-    </div>
-
-    <!-- Segundo Apellido -->
-    <div>
-      <label class="block text-gray-700 mb-1">Segundo Apellido</label>
-      <input type="text" class="w-full border border-gray-300 rounded p-2" [(ngModel)]="user.secondLastName">
+      <label class="block text-gray-700">Nombre de Usuario</label>
+      <input formControlName="username" (blur)="checkUsername()" class="w-full p-2 border rounded" />
+      <div *ngIf="form.get('username')?.touched && form.get('username')?.invalid" class="text-red-500 text-sm">
+        No debe contener espacios.
+      </div>
+      <div *ngIf="usernameTaken" class="text-red-500 text-sm">Ya está en uso.</div>
     </div>
 
     <!-- Email -->
     <div>
-      <label class="block text-gray-700 mb-1">Correo Electrónico</label>
-      <input type="email" class="w-full border border-gray-300 rounded p-2" [(ngModel)]="user.email">
+      <label class="block text-gray-700">Correo Electrónico</label>
+      <input type="email" formControlName="email" class="w-full p-2 border rounded" />
+      <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="text-red-500 text-sm">
+        Correo no válido.
+      </div>
     </div>
 
     <!-- Teléfono -->
     <div>
-      <label class="block text-gray-700 mb-1">Teléfono</label>
-      <input type="tel" class="w-full border border-gray-300 rounded p-2" [(ngModel)]="user.phone">
-    </div>
-
-    <!-- Código Estudiantil -->
-    <div>
-      <label class="block text-gray-700 mb-1">Código Estudiantil</label>
-      <input type="text" class="w-full border border-gray-300 rounded p-2" [(ngModel)]="user.student_code">
-    </div>
-
-    <!-- Nivel académico -->
-    <div>
-      <label class="block text-gray-700 mb-1">Nivel Académico</label>
-      <select class="w-full border border-gray-300 rounded p-2" [(ngModel)]="user.practice_level">
-        <option value="">Seleccione</option>
-        <option value="VII">VII semestre</option>
-        <option value="VIII">VIII semestre</option>
-        <option value="IX">IX semestre</option>
-      </select>
-    </div>
-
-    <!-- Especialidad -->
-    <div>
-      <label class="block text-gray-700 mb-1">Especialidad</label>
-      <input type="text" class="w-full border border-gray-300 rounded p-2" [(ngModel)]="user.speciality">
-    </div>
-
-    <!-- Documento -->
-    <div>
-      <label class="block text-gray-700 mb-1">Número de Documento</label>
-      <input type="text" class="w-full border border-gray-300 rounded p-2" [(ngModel)]="user.document">
-    </div>
-
-    <!-- Tipo de documento -->
-    <div>
-      <label class="block text-gray-700 mb-1">Tipo de Documento</label>
-      <select class="w-full border border-gray-300 rounded p-2" [(ngModel)]="user.type_document">
-        <option value="">Seleccione</option>
-        <option value="CC">Cédula de ciudadanía</option>
-        <option value="TI">Tarjeta de identidad</option>
-        <option value="CE">Cédula de extranjería</option>
-        <option value="Pasaporte">Pasaporte</option>
-      </select>
-    </div>
-
-    <!-- Género -->
-    <div>
-      <label class="block text-gray-700 mb-1">Género</label>
-      <select class="w-full border border-gray-300 rounded p-2" [(ngModel)]="user.gender">
-        <option value="">Seleccione</option>
-        <option value="Masculino">Masculino</option>
-        <option value="Femenino">Femenino</option>
-        <option value="Otro">Otro</option>
-      </select>
+      <label class="block text-gray-700">Celular (formato 3XX1234567)</label>
+      <input type="tel" formControlName="phone" class="w-full p-2 border rounded" />
+      <div *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid" class="text-red-500 text-sm">
+        Formato inválido. Debe empezar con 3 y tener 10 dígitos.
+      </div>
     </div>
 
     <!-- Contraseña -->
     <div>
-      <label class="block text-gray-700 mb-1">Contraseña</label>
-      <input type="password" class="w-full border border-gray-300 rounded p-2" [(ngModel)]="user.password">
+      <label class="block text-gray-700">Contraseña</label>
+      <input type="password" formControlName="password" class="w-full p-2 border rounded" />
+      <div *ngIf="form.get('password')?.touched && form.get('password')?.invalid" class="text-red-500 text-sm">
+        Mínimo 6 caracteres alfanuméricos, sin símbolos ni espacios.
+      </div>
     </div>
-  </div>
 
-  <div class="text-center pt-4">
-    <button
-      pButton
-      type="button"
-      label="Registrar"
-      class="bg-indigo-700 hover:bg-indigo-800 text-white px-6 py-2 rounded"
-      (click)="submitUser()">
-    </button>
-  </div>
+    <!-- Confirmar contraseña -->
+    <div>
+      <label class="block text-gray-700">Confirmar Contraseña</label>
+      <input type="password" formControlName="confirmPassword" class="w-full p-2 border rounded" />
+      <div *ngIf="passwordMismatch" class="text-red-500 text-sm">
+        Las contraseñas no coinciden.
+      </div>
+    </div>
+
+    <!-- Botón -->
+    <div class="text-center">
+      <button pButton type="submit" label="Registrar" class="bg-indigo-700 text-white px-6 py-2 rounded"></button>
+    </div>
+  </form>
 </div>
