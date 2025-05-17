@@ -33,8 +33,8 @@ export class RegClientComponent {
     diferentialApproaches: {
       sex: '',
       genderIdentity: '',
-      ethnicGroup: '',
-      disability: '',
+      ethnicGroup: 'Ninguno',
+      disability: 'Ninguna',
       armedConflictVictim: false
     },
     socioeconomicStudy :{

@@ -58,6 +58,7 @@
         type="button" 
         label="Enviar" 
         class="btn-principal text-white px-6 py-2 rounded hover:bg-indigo-800"
+        [disabled]="!interview.factualDescription || !interview.legalConcept || !interview.action"
         (click)="submitInterview()">
       </button>
     </div>

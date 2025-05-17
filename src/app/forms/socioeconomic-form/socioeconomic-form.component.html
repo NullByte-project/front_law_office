@@ -102,6 +102,11 @@
         type="button" 
         label="Continuar" 
         class="btn-principal text-white px-6 py-2 rounded"
+        [disabled]="!client.socioeconomicStudy.householdType || !client.socioeconomicStudy.profession 
+                    || !client.socioeconomicStudy.personalIncome || !client.socioeconomicStudy.familyIncome 
+                    || !client.socioeconomicStudy.workingHouseholdMembers || !client.socioeconomicStudy.socioeconomicLevel 
+                    || !client.socioeconomicStudy.householdSize || !client.socioeconomicStudy.financialDependents
+                    || !client.socioeconomicStudy.result || !client.socioeconomicStudy.comments"
         (click)="gotoToInterviewForm()">
       </button>
     </div>
