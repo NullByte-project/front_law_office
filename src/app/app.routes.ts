@@ -5,6 +5,7 @@ import { CasesOverviewComponent } from './views/cases-overview/cases-overview.co
 import { InterviewFormComponent } from './forms/interview-form/interview-form.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { UserSignUpComponent } from './forms/user-sign-up/user-sign-up.component';
+import { LoginComponent } from './forms/login/login.component';
 
 export const routes: Routes = [
     { path: '', component: CasesOverviewComponent },
@@ -12,5 +13,6 @@ export const routes: Routes = [
     { path: 'socioeconomico', component: SocioeconomicFormComponent },
     { path: 'entrevista', component:  InterviewFormComponent},
     { path: 'dashboard/:id',  component: DashboardComponent },
-    { path: 'registro',  component: UserSignUpComponent }
+    { path: 'registro',  component: UserSignUpComponent }, 
+    { path: 'login', component: LoginComponent}
 ];
