@@ -26,15 +26,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 export class InterviewFormComponent {
 
   interview = {
-    email: '',
-    fullName: '',
-    documentType: '',
-    documentNumber: '',
-    ageRange: '',
-    phone: '',
-    altEmail: '',
-    address: '',
-    residence: '',
     factualDescription: '',
     responsibleId: 1,
     legalConcept: '',
@@ -79,6 +70,7 @@ export class InterviewFormComponent {
   }
   
   goBack() {
+    console.log('Datos de la entrevista guardados en localStorage:', this.interview);
     const interviewData = JSON.stringify(this.interview);
     localStorage.setItem('interviewForm', interviewData);
     this.router.navigate(['/socioeconomico']);
