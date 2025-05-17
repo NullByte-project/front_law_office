@@ -18,12 +18,21 @@ export class UserRegisterService {
 
   constructor(private http: HttpClient) {}
 
+  /**
+   * Registra un nuevo usuario en el backend.
+   * @param user - Objeto con los datos del usuario a registrar.
+   * @returns Observable con la respuesta del backend.
+   */
   registerUser(user: CreateUserDTO): Observable<any> {
     return this.http.post(this.apiUrl, user);
   }
 
+  /**
+   * Obtiene la lista de todos los usuarios registrados.
+   * @returns Observable con el arreglo de usuarios.
+   */
   getAllUsers(): Observable<any[]> {
-  return this.http.get<any[]>('http://localhost:8081/api/users/all');
-}
+    return this.http.get<any[]>('http://localhost:8081/api/users/all');
+  }
 
 }

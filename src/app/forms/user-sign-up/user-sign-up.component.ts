@@ -22,6 +22,10 @@ export class UserSignUpComponent implements OnInit {
   constructor(private fb: FormBuilder, private userService: UserRegisterService, 
     private alertService: AlertService) {}
 
+  /**
+   * Inicializa el formulario de registro y obtiene la lista de nombres de usuario existentes.
+   * Configura las validaciones para cada campo del formulario.
+   */
   ngOnInit(): void {
     this.form = this.fb.group({
       username: ['', [Validators.required, Validators.pattern(/^[^\s]+$/)]],
@@ -36,11 +40,20 @@ export class UserSignUpComponent implements OnInit {
     });
   }
 
+  /**
+   * Verifica si el nombre de usuario ingresado ya está registrado.
+   * Actualiza la variable usernameTaken según el resultado.
+   */
   checkUsername(): void {
     const input = this.form.get('username')?.value?.toLowerCase();
     this.usernameTaken = this.allUsernames.includes(input);
   }
 
+  /**
+   * Envía el formulario de registro de usuario.
+   * Valida coincidencia de contraseñas y existencia del usuario.
+   * Si es válido, registra el usuario y muestra mensajes de éxito o error.
+   */
   submitUser(): void {
     this.passwordMismatch = this.form.value.password !== this.form.value.confirmPassword;
 

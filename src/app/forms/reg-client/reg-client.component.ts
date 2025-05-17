@@ -76,6 +76,11 @@ export class RegClientComponent {
   disabilities = ['Ninguna', 'Física', 'Mental', 'Múltiple', 'Sensorial'];
   cities = ['Manizales', 'Villamaría']
 
+  /**
+   * Guarda los datos del cliente en localStorage y navega al formulario de datos socioeconómicos.
+   * Serializa el objeto cliente y lo almacena en localStorage.
+   * Luego redirige a la ruta '/socioeconomico'.
+   */
   gotoToSocioeconomicForm() {
     let dataClient = JSON.stringify(this.client);
     console.log('Datos del cliente:', dataClient);
@@ -84,28 +89,11 @@ export class RegClientComponent {
     this.router.navigate(['/socioeconomico']);
   }
 
+  /**
+   * Redirige a la vista principal de casos.
+   * Navega a la ruta '/'.
+   */
   gotoCasesOverview() {
     this.router.navigate(['/']);
   }
-
-  // submitForm() {
-  //   this.alertService.loading('Cargando...');
-  //   this.clientService.createClient(this.client).subscribe({
-  //     next: (response) => {
-  //       console.log('Cliente creado:', response);
-  //       // Guardar el ID del cliente en localStorage
-  //       localStorage.setItem('clientId', response.id);
-  //       // Redirigir al formulario del estudio socioeconómico
-
-  //       this.alertService.success('Cliente registrado', 'El cliente ha sido creado exitosamente')
-  //       .then(() => {
-  //         this.router.navigate(['/socioeconomico']);
-  //       });
-  //     },
-  //     error: (err) => {
-  //       console.error('Error al crear cliente:', err);
-  //       this.alertService.error('Error al registrar', 'No se pudo registrar el cliente.');
-  //     }
-  //   });
-  // }
 }

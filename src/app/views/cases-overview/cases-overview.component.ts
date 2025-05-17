@@ -32,14 +32,27 @@ export class CasesOverviewComponent {
   }
   */
 
+  /**
+   * Método del ciclo de vida de Angular que se ejecuta al inicializar el componente.
+   * Llama a la función para obtener los casos del área seleccionada.
+   */
   ngOnInit(): void {
     this.getCasesForArea(this.areaId);
   }
 
-  gotoIntervew(){
+  /**
+   * Navega al formulario de registro de cliente para iniciar una nueva entrevista.
+   */
+  gotoInterview() {
     this.router.navigate(['/datos-cliente']);
   }
 
+  /**
+   * Obtiene los casos asociados a un área específica.
+   * Por cada caso, obtiene información detallada y la información del cliente relacionada.
+   * Asigna los casos obtenidos al arreglo local y maneja errores en las peticiones.
+   * @param areaId - ID del área para la cual se buscan los casos.
+   */
   getCasesForArea(areaId: number) {
     this.casesService.getCasesForArea(areaId).subscribe({
       next:(response) => {
@@ -73,14 +86,18 @@ export class CasesOverviewComponent {
     })
   }
 
-
-goToDashboard(caseId: number, areaId: number): void {
-  this.router.navigate(['/dashboard', caseId], {
-    queryParams: { area: areaId }
+  /**
+   * Navega al dashboard del caso seleccionado, pasando el ID del caso y el área como parámetros.
+   * @param caseId - ID del caso seleccionado.
+   * @param areaId - ID del área asociada al caso.
+   */
+  goToDashboard(caseId: number, areaId: number): void {
+    this.router.navigate(['/dashboard', caseId], {
+      queryParams: { area: areaId }
   
-  });
-  console.log('sirve para ir al dashboard', caseId, areaId);
-}
+    });
+    console.log('sirve para ir al dashboard', caseId, areaId);
+  }
 
 
 }

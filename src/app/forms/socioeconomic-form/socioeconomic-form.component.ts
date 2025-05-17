@@ -60,6 +60,10 @@ export class SocioeconomicFormComponent {
   results = ['Favorable', 'Desfavorable'];
   socioeconomicLevels = ['Bajo', 'Medio', 'Alto'];
 
+  /**
+   * Método del ciclo de vida de Angular que se ejecuta al inicializar el componente.
+   * Carga los datos del cliente desde localStorage si existen.
+   */
   ngOnInit() {
     const storedClient = localStorage.getItem('dataClient');
     if (storedClient) {
@@ -70,11 +74,18 @@ export class SocioeconomicFormComponent {
     }
   }
 
+  /**
+   * Guarda los datos actuales del cliente en localStorage y navega al formulario de datos del cliente.
+   */
   goBack() { 
     localStorage.setItem('dataClient', JSON.stringify(this.client));
     this.router.navigate(['/datos-cliente']);
   }
 
+  /**
+   * Muestra un modal con el protocolo de atención y fuentes de consulta relevantes.
+   * Utiliza el servicio de alertas para mostrar información detallada.
+   */
   openProtocolo(){
     this.alertService.showLargeModal('Protocolo', `
       <p><strong>El Consultorio jurídico “DANIEL RESTREPO ESCOBAR”</strong> establece como corolario que el abordaje del usuario debe estar dotado de humanismo, empatía, respeto y profesionalismo.</p>
@@ -98,32 +109,12 @@ export class SocioeconomicFormComponent {
     `);
   }
 
+  /**
+   * Guarda los datos del cliente en localStorage y navega al formulario de entrevista.
+   */
   gotoToInterviewForm() {
     localStorage.setItem('dataClient', JSON.stringify(this.client));
     console.log(this.client);
     this.router.navigate(['/entrevista']);
   }
-  
-  // submitForm() {
-  //   const clientId = localStorage.getItem('clientId');
-  //   if (!clientId) {
-  //     this.alertService.error('Cliente no encontrado', 'No se encontró el ID del cliente en localStorage.');
-  //     return;
-  //   }
-    
-
-  //   this.alertService.loading('Enviando estudio socioeconómico...');
-
-  //   this.clientService.updateSocioeconomicStudy(this.socioForm, clientId).subscribe({
-  //     next: (response) => {
-  //       this.alertService.success('Estudio registrado', 'El estudio socioeconómico fue enviado correctamente.')
-  //         .then(() => this.router.navigate(['/'])); // Aca deberia seguir al formulario para registrar la entrevista
-  //       console.log(response)
-  //     },
-  //     error: (err) => {
-  //       console.error(err);
-  //       this.alertService.error('Error', 'No se pudo enviar el estudio socioeconómico.');
-  //     }
-  //   });
-  // }
 }

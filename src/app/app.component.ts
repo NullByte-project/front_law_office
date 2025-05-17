@@ -18,6 +18,13 @@ export class AppComponent {
   title = 'front_law_office';
   viewNavbar: boolean = true;
 
+  /**
+   * Constructor del componente principal de la aplicación.
+   * Se suscribe a los eventos de navegación del router para:
+   * - Hacer scroll al inicio de la página en cada navegación.
+   * - Mostrar u ocultar la barra de navegación dependiendo de la ruta actual.
+   * @param router - Servicio de enrutamiento de Angular.
+   */
   constructor(private router: Router) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
