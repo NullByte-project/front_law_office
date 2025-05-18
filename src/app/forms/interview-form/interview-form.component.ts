@@ -28,7 +28,7 @@ export class InterviewFormComponent {
     factualDescription: '',
     responsibleId: 1,
     legalConcept: '',
-    action: '',
+    action: 'Asesoría',
     legalCase: {
       folder: '',
       legalAction: {
@@ -138,7 +138,7 @@ export class InterviewFormComponent {
     this.interviewService.createInterview(this.interview).subscribe({
       next: (response) => {
         // Guardar el ID de la entrevista en localStorage
-        this.alertService.success('Entrevista registrada', 'La entrevista ha sido creada exitosamente')
+        this.alertService.success('Entrevista registrada', 'Caso creado correctamente.')
         .then(() => {
           localStorage.removeItem('dataClient')
           localStorage.removeItem('socioForm')
@@ -148,7 +148,7 @@ export class InterviewFormComponent {
       },
       error: (err) => {
         console.error('Error al crear entrevista:', err);
-        this.alertService.error('Error al registrar', 'No se pudo registrar la entrevista.');
+        this.alertService.error('Error al registrar', 'No se pudo registrar el caso.');
       }
     });
   }
