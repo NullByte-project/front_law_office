@@ -1,114 +1,180 @@
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6 mt-6">
     <h2 class="text-xl font-semibold text-center text-indigo-800">Estudio Socioeconómico</h2>
     <div class="text-center mt-6">
-      <button 
-        pButton 
-        type="button" 
-        label="Protocolo" 
-        class="btn-principal text-white px-4 py-2 rounded text-center" 
-        (click)="openProtocolo()">
-      </button>
+        <button 
+            pButton 
+            type="button" 
+            label="Protocolo" 
+            class="btn-principal text-white px-4 py-2 rounded text-center" 
+            (click)="openProtocolo()">
+        </button>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <!-- Tipo de vivienda -->
-      <div>
-        <label class="block text-gray-700 mb-1">Tipo de Vivienda</label>
-        <p-dropdown [options]="householdTypes" [(ngModel)]="client.socioeconomicStudy.householdType" placeholder="Seleccione" class="w-full" />
-      </div>
-  
-      <!-- Profesión -->
-      <div>
-        <label class="block text-gray-700 mb-1">Ocupación / Profesión</label>
-        <input pInputText [(ngModel)]="client.socioeconomicStudy.profession" class="w-full" />
-      </div>
-  
-      <!-- Ingreso personal -->
+        <!-- Tipo de vivienda -->
         <div>
-            <label class="block text-gray-700 mb-1">Ingresos Personales</label>
-            <p-inputNumber [(ngModel)]="client.socioeconomicStudy.personalIncome" inputId="personalIncome" mode="currency" currency="COP" locale="es-CO" class="w-full" />
+            <label for="householdType" class="block text-gray-700 mb-1">Tipo de Vivienda</label>
+            <p-dropdown 
+                id="householdType"
+                [options]="householdTypes" 
+                [(ngModel)]="client.socioeconomicStudy.householdType" 
+                placeholder="Seleccione" 
+                class="w-full" 
+                aria-labelledby="householdType-label" />
+        </div>
+
+        <!-- Profesión -->
+        <div>
+            <label for="profession" class="block text-gray-700 mb-1">Ocupación / Profesión</label>
+            <input 
+                id="profession"
+                pInputText 
+                [(ngModel)]="client.socioeconomicStudy.profession" 
+                class="w-full" 
+                aria-labelledby="profession-label" />
+        </div>
+
+        <!-- Ingreso personal -->
+        <div>
+            <label for="personalIncome" class="block text-gray-700 mb-1">Ingresos Personales</label>
+            <p-inputNumber 
+                id="personalIncome"
+                [(ngModel)]="client.socioeconomicStudy.personalIncome" 
+                mode="currency" 
+                currency="COP" 
+                locale="es-CO" 
+                class="w-full" 
+                aria-labelledby="personalIncome-label" />
         </div>
         
         <!-- Ingreso familiar -->
         <div>
-            <label class="block text-gray-700 mb-1">Ingresos Familiares</label>
-            <p-inputNumber [(ngModel)]="client.socioeconomicStudy.familyIncome" inputId="familyIncome" mode="currency" currency="COP" locale="es-CO" class="w-full" />
+            <label for="familyIncome" class="block text-gray-700 mb-1">Ingresos Familiares</label>
+            <p-inputNumber 
+                id="familyIncome"
+                [(ngModel)]="client.socioeconomicStudy.familyIncome" 
+                mode="currency" 
+                currency="COP" 
+                locale="es-CO" 
+                class="w-full" 
+                aria-labelledby="familyIncome-label" />
         </div>
-  
-      <!-- Personas que trabajan -->
-      <div>
-        <label class="block text-gray-700 mb-1">Personas que trabajan en el núcleo familiar</label>
-        <input type="number" pInputText [(ngModel)]="client.socioeconomicStudy.workingHouseholdMembers" class="w-full" />
-      </div>
-  
-      <!-- Estrato socioeconómico -->
-      <div>
-        <label class="block text-gray-700 mb-1">Estrato Socioeconómico</label>
-        <p-dropdown [options]="socioeconomicLevels" [(ngModel)]="client.socioeconomicStudy.socioeconomicLevel" placeholder="Seleccione" class="w-full" />
-      </div>
-  
-      <!-- Personas en el hogar -->
-      <div>
-        <label class="block text-gray-700 mb-1">Personas que conviven en el hogar</label>
-        <input type="number" pInputText [(ngModel)]="client.socioeconomicStudy.householdSize" class="w-full" />
-      </div>
-  
-      <!-- Personas que dependen económicamente -->
-      <div>
-        <label class="block text-gray-700 mb-1">Personas que dependen económicamente del client</label>
-        <input type="number" pInputText [(ngModel)]="client.socioeconomicStudy.financialDependents" class="w-full" />
-      </div>
+
+        <!-- Personas que trabajan -->
+        <div>
+            <label for="workingHouseholdMembers" class="block text-gray-700 mb-1">Personas que trabajan en el núcleo familiar</label>
+            <input 
+                id="workingHouseholdMembers"
+                type="number" 
+                pInputText 
+                [(ngModel)]="client.socioeconomicStudy.workingHouseholdMembers" 
+                class="w-full" 
+                aria-labelledby="workingHouseholdMembers-label" />
+        </div>
+
+        <!-- Estrato socioeconómico -->
+        <div>
+            <label for="socioeconomicLevel" class="block text-gray-700 mb-1">Estrato Socioeconómico</label>
+            <p-dropdown 
+                id="socioeconomicLevel"
+                [options]="socioeconomicLevels" 
+                [(ngModel)]="client.socioeconomicStudy.socioeconomicLevel" 
+                placeholder="Seleccione" 
+                class="w-full" 
+                aria-labelledby="socioeconomicLevel-label" />
+        </div>
+
+        <!-- Personas en el hogar -->
+        <div>
+            <label for="householdSize" class="block text-gray-700 mb-1">Personas que conviven en el hogar</label>
+            <input 
+                id="householdSize"
+                type="number" 
+                pInputText 
+                [(ngModel)]="client.socioeconomicStudy.householdSize" 
+                class="w-full" 
+                aria-labelledby="householdSize-label" />
+        </div>
+
+        <!-- Personas que dependen económicamente -->
+        <div>
+            <label for="financialDependents" class="block text-gray-700 mb-1">Personas que dependen económicamente del cliente</label>
+            <input 
+                id="financialDependents"
+                type="number" 
+                pInputText 
+                [(ngModel)]="client.socioeconomicStudy.financialDependents" 
+                class="w-full" 
+                aria-labelledby="financialDependents-label" />
+        </div>
     </div>
-  
-    <!-- Sección booleana -->
+
+    <!-- Sección booleana (ya estaba correcto) -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-      <!-- ¿Es dependiente económicamente? -->
-      <div class="flex items-center gap-2">
-        <p-checkbox [(ngModel)]="client.socioeconomicStudy.isFinancialDependent" binary="true" inputId="depEco" />
-        <label for="depEco" class="text-gray-700">¿Es dependiente económicamente de alguna persona?</label>
-      </div>
-  
-      <!-- ¿El sostenedor puede pagar abogado? -->
-      <div *ngIf="client.socioeconomicStudy.isFinancialDependent" class="flex items-center gap-2">
-        <p-checkbox [(ngModel)]="client.socioeconomicStudy.supporterPayLawyer" binary="true" inputId="pagaAbogado" />
-        <label for="pagaAbogado" class="text-gray-700">¿El sostenedor puede pagar un abogado?</label>
-      </div>
+        <!-- ¿Es dependiente económicamente? -->
+        <div class="flex items-center gap-2">
+            <p-checkbox 
+                [(ngModel)]="client.socioeconomicStudy.isFinancialDependent" 
+                binary="true" 
+                inputId="depEco" />
+            <label for="depEco" class="text-gray-700">¿Es dependiente económicamente de alguna persona?</label>
+        </div>
+
+        <!-- ¿El sostenedor puede pagar abogado? -->
+        <div *ngIf="client.socioeconomicStudy.isFinancialDependent" class="flex items-center gap-2">
+            <p-checkbox 
+                [(ngModel)]="client.socioeconomicStudy.supporterPayLawyer" 
+                binary="true" 
+                inputId="pagaAbogado" />
+            <label for="pagaAbogado" class="text-gray-700">¿El sostenedor puede pagar un abogado?</label>
+        </div>
     </div>
-  
+
     <!-- Descripción y comentarios -->
     <div class="mt-4 space-y-4">
-      <div>
-        <label class="block text-gray-700 mb-1">Resultado del Estudio</label>
-        <p-dropdown [options]="results" [(ngModel)]="client.socioeconomicStudy.result" placeholder="Seleccione" class="w-full" />
-      </div>
-  
-      <div>
-        <label class="block text-gray-700 mb-1">Comentarios</label>
-        <textarea pInputTextarea [(ngModel)]="client.socioeconomicStudy.comments" rows="4" class="w-full border p-2 rounded-lg"></textarea>
-      </div>
+        <div>
+            <label for="result" class="block text-gray-700 mb-1">Resultado del Estudio</label>
+            <p-dropdown 
+                id="result"
+                [options]="results" 
+                [(ngModel)]="client.socioeconomicStudy.result" 
+                placeholder="Seleccione" 
+                class="w-full" 
+                aria-labelledby="result-label" />
+        </div>
+
+        <div>
+            <label for="comments" class="block text-gray-700 mb-1">Comentarios</label>
+            <textarea 
+                id="comments"
+                pInputTextarea 
+                [(ngModel)]="client.socioeconomicStudy.comments" 
+                rows="4" 
+                class="w-full border p-2 rounded-lg"
+                aria-labelledby="comments-label"></textarea>
+        </div>
     </div>
-  
+
     <div class="flex justify-center gap-4 mt-6">
-      <!-- Botón Retroceder -->
-      <button 
-        pButton 
-        type="button" 
-        label="Atrás" 
-        class="btn-secundary text-white px-6 py-2 rounded" 
-        (click)="goBack()">
-      </button>
-      <!-- Botón Guardar -->
-      <button 
-        pButton 
-        type="button" 
-        label="Continuar" 
-        class="btn-principal text-white px-6 py-2 rounded"
-        [disabled]="!client.socioeconomicStudy.householdType || !client.socioeconomicStudy.profession 
-                    || !client.socioeconomicStudy.personalIncome || !client.socioeconomicStudy.familyIncome 
-                    || !client.socioeconomicStudy.workingHouseholdMembers || !client.socioeconomicStudy.socioeconomicLevel 
-                    || !client.socioeconomicStudy.householdSize || !client.socioeconomicStudy.financialDependents
-                    || !client.socioeconomicStudy.result || !client.socioeconomicStudy.comments"
-        (click)="gotoToInterviewForm()">
-      </button>
+        <!-- Botón Retroceder -->
+        <button 
+            pButton 
+            type="button" 
+            label="Atrás" 
+            class="btn-secundary text-white px-6 py-2 rounded" 
+            (click)="goBack()">
+        </button>
+        <!-- Botón Guardar -->
+        <button 
+            pButton 
+            type="button" 
+            label="Continuar" 
+            class="btn-principal text-white px-6 py-2 rounded"
+            [disabled]="!client.socioeconomicStudy.householdType || !client.socioeconomicStudy.profession 
+                        || !client.socioeconomicStudy.personalIncome || !client.socioeconomicStudy.familyIncome 
+                        || !client.socioeconomicStudy.workingHouseholdMembers || !client.socioeconomicStudy.socioeconomicLevel 
+                        || !client.socioeconomicStudy.householdSize || !client.socioeconomicStudy.financialDependents
+                        || !client.socioeconomicStudy.result || !client.socioeconomicStudy.comments"
+            (click)="gotoToInterviewForm()">
+        </button>
     </div>
-  </div>
-  
+</div>
